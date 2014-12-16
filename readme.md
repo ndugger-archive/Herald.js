@@ -28,7 +28,7 @@ Or you can put all arguments in an object, for example:
 			}
 		}
 	});
-	error.tell();
+	warning.tell();
 	
 **Example Plugin:**
 
