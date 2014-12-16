@@ -41,7 +41,6 @@
 			},
 			notification: function() {
 				this.notification.classList.add("herald-notification");
-				this.notification.style.opacity = 1;
 				this.notification.dataset.type = this.type;
 				this.notification.appendChild(this.make.message.call(this));
 				return this.notification;
@@ -74,6 +73,9 @@
 			};
 		},
 		leave: function(_this) {
+			if (!this.notification.style.opacity) {
+				this.notification.style.opacity = 1;
+			};
 			if (this.notification.style.opacity > 0) {
 				setTimeout(function() {
 					_this.notification.style.opacity -= 0.05;
