@@ -2,8 +2,8 @@ Herald.js
 ===
 Notification generation system with plugin support.
 
-	new Herald(message [, type, options]);
-	new Herald(message [, options]);
+	new Herald(message[, type, options]);
+	new Herald(message[, options]);
 	new Herald(options);
 
 **Example Usage:**
