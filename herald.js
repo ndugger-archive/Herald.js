@@ -55,19 +55,10 @@
 		setup: function() {
 			if (this.options) {
 				for (var option in this.options) {
-					switch (option) {
-						case "style":
-							for (var property in this.options[option]) {
-								this.element.style[property] = this.options[option][property];
-							};
-							break;
-						default:
-							if (this.hasOwnProperty(option)) {
-								this[option] = this.options[option];
-							} else if (Herald.api.hasOwnProperty(option)) {
-								Herald.api[option].call(this, this.options[option]);
-							};
-							break;
+					if (this.hasOwnProperty(option)) {
+						this[option] = this.options[option];
+					} else if (Herald.api.hasOwnProperty(option)) {
+						Herald.api[option].call(this, this.options[option]);
 					};
 				};
 			};
