@@ -1,0 +1,25 @@
+.herald-notification {
+	width:100%;
+	font-family:"Arial", sans-serif;
+	font-size:16px;
+	position:fixed;
+	top:0;
+	left:0;
+}
+
+.herald-notification[data-type="default"] {
+	
+}
+
+.herald-notification[data-type="error"] {
+	background:tomato;
+	color:#FFF;
+}
+
+.herald-message {
+	padding:12px;
+}
+
+.herald-message-close {
+	
+}
