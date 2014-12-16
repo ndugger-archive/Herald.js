@@ -10,6 +10,7 @@ Notification generation system with plugin support.
 Or you can customize the `Herald` with a third "options" argument:
 
 	var error = new Herald("Error, something went wrong!", "error", {
+		seconds: 3, // will fade out after 3 seconds
 		style: {
 			fontWeight: "bold"
 		}
@@ -18,9 +19,9 @@ Or you can customize the `Herald` with a third "options" argument:
 	
 Or you can put all arguments in an object, for example:
 
-	var error = new Herald({
-		message: "Error, something went wrong!",
-		type: "error",
+	var warning = new Herald({
+		message: "You've been warned!",
+		type: "warning",
 		options: {
 			style: {
 				fontWeight: "bold"
@@ -32,13 +33,16 @@ Or you can put all arguments in an object, for example:
 **Example Plugin:**
 
 	Herald.api.on = function(event) {
-		this.notification.addEventListener(event[0], event[1]);
+		var _this = this;
+		this.notification.addEventListener(event[0], function(e) {
+			event[1].call(_this, e);
+		});
 	};
 	
 	var error = new Herald("Error, something went wrong!", {
 		type: "error",
-		on: ["click", function(e) {
-			console.log(this);
+		on: ["click", function() {
+			this.leave(this); // 'this.leave' is a preexisting method
 		}]
 	});
 	error.tell();

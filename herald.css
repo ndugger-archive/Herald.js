@@ -1,25 +1,42 @@
-.herald-notification {
-	width:100%;
+.herald-container {
 	font-family:"Arial", sans-serif;
-	font-size:16px;
 	position:fixed;
 	top:0;
-	left:0;
+	right:0;
+}
+
+.herald-notification {
+	width:300px;
+	min-height:50px;
+	padding:20px;
+	margin:10px;
 }
 
 .herald-notification[data-type="default"] {
-	
+	background:#95a5a6;
+	color:#FFF;
 }
 
 .herald-notification[data-type="error"] {
-	background:tomato;
+	background:#e74c3c;
+	color:#FFF;
+}
+
+.herald-notification[data-type="warning"] {
+	background:#f39c12;
+	color:#FFF;
+}
+
+.herald-notification[data-type="info"] {
+	background:#3498db;
+	color:#FFF;
+}
+
+.herald-notification[data-type="success"] {
+	background:#2ecc71;
 	color:#FFF;
 }
 
 .herald-message {
-	padding:12px;
-}
-
-.herald-message-close {
 	
 }

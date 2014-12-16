@@ -12,31 +12,54 @@
 	};
 	Herald.api = Herald.prototype = {
 		tell: function() {
-			this.build();
-			document.body.appendChild(this.notification);
-		},
-		build: function() {
-			this.notification = document.createElement("div");
 			if (typeof this.message === "object") {
 				this.options = this.message;
 			} else if (typeof this.type === "object") {
 				this.options = this.type;
 			};
-			this.configure();
-			this.notification.dataset.type = this.type;
-			this.notification.classList.add("herald-notification");
-			var message = document.createElement("div");
-			message.textContent = this.message;
-			message.classList.add("herald-message");
-			this.notification.appendChild(message);
+			this.notification = document.createElement("div");
+			this.setup();
+			this.make.container.call(this)
+				.appendChild(this.make.notification.call(this));
+			if (this.options.seconds) {
+				var _this = this;
+				setTimeout(function() {
+					_this.leave(_this);
+				}, this.options.seconds * 1000);
+			};
 		},
-		configure: function() {
+		make: {
+			container: function() {
+				if (!document.querySelector(".herald-container")) {
+					var container = document.createElement("div");
+					container.classList.add("herald-container");
+					document.body.appendChild(container);
+				} else {
+					var container = document.querySelector(".herald-container");
+				};
+				return container;
+			},
+			notification: function() {
+				this.notification.classList.add("herald-notification");
+				this.notification.style.opacity = 1;
+				this.notification.dataset.type = this.type;
+				this.notification.appendChild(this.make.message.call(this));
+				return this.notification;
+			},
+			message: function() {
+				var message = document.createElement("div");
+				message.classList.add("herald-message");
+				message.textContent = this.message;
+				return message;
+			}
+		},
+		setup: function() {
 			if (this.options) {
 				for (var option in this.options) {
 					switch (option) {
 						case "style":
 							for (var property in this.options[option]) {
-								this.notification.style[property] = this.options[option][property];
+								this.element.style[property] = this.options[option][property];
 							};
 							break;
 						default:
@@ -48,6 +71,16 @@
 							break;
 					};
 				};
+			};
+		},
+		leave: function(_this) {
+			if (this.notification.style.opacity > 0) {
+				setTimeout(function() {
+					_this.notification.style.opacity -= 0.05;
+					_this.leave(_this);
+				}, 25);
+			} else {
+				this.notification.parentNode.removeChild(this.notification);
 			};
 		}
 	};
