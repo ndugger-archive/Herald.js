@@ -2,6 +2,10 @@ Herald.js
 ===
 Notification generation system with plugin support.
 
+	new Herald(message [, type, options]);
+	new Herald(message [, options]);
+	new Herald(options);
+
 **Example Usage:**
 
 	var error = new Herald("Error, something went wrong!", "error");
