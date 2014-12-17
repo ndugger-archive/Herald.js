@@ -47,6 +47,7 @@ Or you can customize the `Herald` with a third "options" argument:
 	var error = new Herald("You've earned an award!", {
 		type: "award",
 		on: ["click", function() {
+			this.dismiss()
 			// do stuff here
 		}]
 	});
