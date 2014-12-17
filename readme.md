@@ -1,5 +1,7 @@
 Herald.js
 ===
+**DEMO:** http://nickdugger.com/herald/
+
 Notification generation system with plugin support.
 
 	new Herald(message[, type[, options]]);
@@ -14,6 +16,7 @@ Notification generation system with plugin support.
 Or you can customize the `Herald` with a third "options" argument:
 
 	var error = new Herald("Error, something went wrong!", "error", {
+		title: "Whoops!",
 		seconds: 3, // will fade out after 3 seconds
 		style: { 
 			fontWeight: "bold"
@@ -21,14 +24,14 @@ Or you can customize the `Herald` with a third "options" argument:
 	});
 	error.tell();
 	
-Or you can put all arguments in an object, for example:
+*Preferred Method:* Or you can put all arguments in an object:
 
 	var warning = new Herald({
+		title: "Warning!",
 		message: "You've been warned!",
 		type: "warning",
-		style: {
-			fontWeight: "bold"
-		}
+		icon: "url_here",
+		time: 4000
 	});
 	warning.tell();
 	

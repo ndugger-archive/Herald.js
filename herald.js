@@ -6,37 +6,26 @@
 	};
 })(function() {
 	function Herald(message, type, options) {
+		this.title = null;
 		this.message = message;
 		this.type = type || "default";
 		this.options = options;
 	};
 	Herald.api = Herald.prototype = {
-		tell: function() {
-			var _this = this;
-			// start tell
-			if (typeof _this.message === "object") {
-				_this.options = _this.message;
-			} else if (typeof _this.type === "object") {
-				_this.options = _this.type;
-			};
-			this.notification = document.createElement("div");
-			// start configuration
-			function _setup() {
-				if (_this.options) {
-					for (var option in _this.options) {
-						if (_this.hasOwnProperty(option)) {
-							_this[option] = _this.options[option];
-						} else if (Herald.api.hasOwnProperty(option)) {
-							Herald.api[option].call(_this, _this.options[option]);
+		_: {
+			setup: function(Herald) {
+				if (Herald.options) {
+					for (var option in Herald.options) {
+						if (Herald.hasOwnProperty(option)) {
+							Herald[option] = Herald.options[option];
+						} else if (window.Herald.api.hasOwnProperty(option)) {
+							window.Herald.api[option].call(Herald, Herald.options[option]);
 						};
 					};
 				};
-			};
-			_setup();
-			// end configuration
-			// start element creation
-			var _make = {
-				container: function() {
+			},
+			make: {
+				container: function(Herald) {
 					if (!document.querySelector(".herald-container")) {
 						var container = document.createElement("div");
 						container.classList.add("herald-container");
@@ -46,47 +35,68 @@
 					};
 					return container;
 				},
-				notification: function() {
-					_this.notification.classList.add("herald-notification");
-					_this.notification.dataset.type = _this.type;
-					_this.notification.appendChild(_make.message.call(_this));
-					return _this.notification;
+				notification: function(Herald) {
+					Herald.notification.classList.add("herald-notification");
+					Herald.notification.dataset.type = Herald.type;
+					if (Herald.title) Herald.notification.appendChild(this.title(Herald));
+					if (Herald.message) Herald.notification.appendChild(this.message(Herald));
+					return Herald.notification;
 				},
-				message: function() {
+				title: function(Herald) {
+					var title = document.createElement("div");
+					title.classList.add("herald-title");
+					title.textContent = Herald.title;
+					return title;
+				},
+				message: function(Herald) {
 					var message = document.createElement("div");
 					message.classList.add("herald-message");
-					message.textContent = _this.message;
+					message.textContent = Herald.message;
 					return message;
 				}
+			}
+		},
+		tell: function() {
+			var _this = this;
+			if (typeof _this.message === "object") {
+				_this.options = _this.message;
+			} else if (typeof _this.type === "object") {
+				_this.options = _this.type;
 			};
-			_make.container().appendChild(_make.notification.call(_this));
-			// end element creation
-			// start fading out
-			if (_this.options && _this.options.seconds) {
-				function _leave(_this) {
-					if (!_this.notification.style.opacity) {
-						_this.notification.style.opacity = 1;
-					};
-					if (_this.notification.style.opacity > 0) {
-						setTimeout(function() {
-							_this.notification.style.opacity -= 0.05;
-							_leave(_this);
-						}, 25);
-					} else if (_this.notification.parentNode) {
-						_make.container().removeChild(_this.notification);
-					};
-				};
+			this.notification = document.createElement("div");
+			_this._.setup(_this);
+			_this._.make.container(_this)
+				.appendChild(_this._.make.notification(_this));
+			if (_this.options && _this.options.time) {
 				setTimeout(function() {
-					_leave(_this);
-				}, _this.options.seconds * 1000);
+					_this.dismiss(_this);
+				}, _this.options.time);
 			};
-			// end fading out
-			// end tell
+		},
+		dismiss: function() {
+			var _this = this;
+			if (!_this.notification.style.opacity) {
+				_this.notification.style.opacity = 1;
+			};
+			if (_this.notification.style.opacity > 0) {
+				setTimeout(function() {
+					_this.notification.style.opacity -= 0.05;
+					_this.dismiss(_this);
+				}, 15);
+			} else if (_this.notification.parentNode) {
+				_this._.make.container().removeChild(_this.notification);
+			};
 		},
 		style: function(style) {
 			for (var property in style) {
 				this.notification.style[property] = style[property];
 			};
+		},
+		icon: function(src) {
+			var icon = new Image();
+			icon.src = src;
+			icon.classList.add("herald-icon");
+			this.notification.appendChild(icon);
 		},
 		on: function(event) {
 			var _this = this;
