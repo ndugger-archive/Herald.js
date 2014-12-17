@@ -17,7 +17,7 @@ Or you can customize the `Herald` with a third "options" argument:
 
 	var error = new Herald("Error, something went wrong!", "error", {
 		title: "Whoops!",
-		seconds: 3, // will fade out after 3 seconds
+		time: 3000, // will fade out after 3 seconds
 		style: { 
 			fontWeight: "bold"
 		}
