@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+	<head>
+		<link rel="stylesheet" href="herald.css"/>
+		<script src="herald.js"></script>
+		<script>
+			// Test stuff:
+			//====================================
+			window.onload = function() {
+				var message = new Herald({
+					message: "Something unexpected happened.",
+					type: "info",
+					seconds: 3,
+					on: ["click", function() {
+						this.notification.parentNode.removeChild(this.notification);
+					}]
+				});
+				message.tell();
+				
+				var error = new Herald({
+					message: "Something unexpected happened.",
+					type: "error",
+					seconds: 3,
+					on: ["click", function() {
+						this.notification.parentNode.removeChild(this.notification);
+					}]
+				});
+				error.tell();
+			};
+		</script>
+	</head>
+	<body>
+		<!-- Herald notifications get appended here -->
+	</body>
+</html>

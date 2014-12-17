@@ -15,7 +15,7 @@ Or you can customize the `Herald` with a third "options" argument:
 
 	var error = new Herald("Error, something went wrong!", "error", {
 		seconds: 3, // will fade out after 3 seconds
-		style: { // doesn't exist without herald.style.js plugin
+		style: {
 			fontWeight: "bold"
 		}
 	});
@@ -26,10 +26,8 @@ Or you can put all arguments in an object, for example:
 	var warning = new Herald({
 		message: "You've been warned!",
 		type: "warning",
-		options: {
-			style: {
-				fontWeight: "bold"
-			}
+		style: {
+			fontWeight: "bold"
 		}
 	});
 	warning.tell();
@@ -46,7 +44,7 @@ Or you can put all arguments in an object, for example:
 	var error = new Herald("Error, something went wrong!", {
 		type: "error",
 		on: ["click", function() {
-			this.leave(this); // 'this.leave' is a preexisting method
+			// code to remove notification from container
 		}]
 	});
 	error.tell();
