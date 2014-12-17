@@ -1,6 +1,8 @@
 Herald.js
 ===
-(Released under MIT License) **DEMO:** http://nickdugger.com/herald/
+(Released under MIT License)
+
+**DEMO:** http://nickdugger.com/herald/
 
 Notification generation system with plugin support.
 
