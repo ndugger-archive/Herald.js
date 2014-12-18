@@ -49,7 +49,7 @@ Or you can customize the `Herald` with a third "options" argument:
 	var error = new Herald("You've earned an award!", {
 		type: "award",
 		on: ["click", function() {
-			this.dismiss()
+			this.dismiss(); // this.dismiss() is a preexisting method
 			// do stuff here
 		}]
 	});
